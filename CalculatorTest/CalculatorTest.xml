@@ -1,0 +1,10 @@
+<testsuites>
+	<testsuite name="AllTests" tests="6">
+		<testcase classname="AllTests" name="test_one_plus_one"/>
+		<testcase classname="AllTests" name="test_two_times_two"/>
+		<testcase classname="AllTests" name="thest_three_divided_two"/>
+		<testcase classname="AllTests" name="test_five_divided_zero"/>
+		<testcase classname="AllTests" name="test_wrong_operator"/>
+		<testcase classname="AllTests" name="test_modulo"/>
+	</testsuite>
+</testsuites>
