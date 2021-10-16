@@ -16,7 +16,6 @@ void pocketcalculator(std::istream &in, std::ostream &out){
 			std::string resultString = std::to_string(result);
 			if(resultString.length() <= 8){
 				printLargeNumber(result, out);
-				out << resultString << '\n';
 			}
 			else {
 				throw std::length_error{"Result to big"};
@@ -26,8 +25,4 @@ void pocketcalculator(std::istream &in, std::ostream &out){
 			printLargeError(out);
 		}
 	}
-}
-
-int main() {
-	pocketcalculator(std::cin, std::cout);
 }
