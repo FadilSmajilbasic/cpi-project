@@ -22,7 +22,7 @@ int calc(int lhs, int rhs, char op){
 		    }
 		  return lhs % rhs;
 	  default:
-		  return 0;
+		  return std::numeric_limits<int>::max();
 	 }
 }
 
