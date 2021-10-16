@@ -31,7 +31,7 @@ void test_modulo(){
 
 void test_wrong_operator(){
 	auto result = calc(6, 3, '&');
-	ASSERT_EQUAL(INT32_MAX, result);
+	ASSERT_EQUAL(0, result);
 }
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
