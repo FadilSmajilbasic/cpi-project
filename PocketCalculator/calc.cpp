@@ -13,17 +13,18 @@ int calc(int lhs, int rhs, char op){
 		  return lhs * rhs;
 	  case '/':
 		  if(rhs == 0){
-			  return std::numeric_limits<int>::max();
+			  throw std::invalid_argument{"Division by zero"};
 		  }
 		  return lhs / rhs;
 	  case '%':
 		  if(rhs == 0){
-		  	  return std::numeric_limits<int>::max();
+			  throw std::invalid_argument{"Division by zero"};
 		    }
 		  return lhs % rhs;
-	  default:
-		  return std::numeric_limits<int>::max();
-	 }
+	}
+
+	throw std::invalid_argument{"Invalid argument"};
+
 }
 
 int calc(std::istream & in){

@@ -3,7 +3,11 @@
 #include "xml_listener.h"
 #include "cute_runner.h"
 #include "calc.h"
+#include "sevensegment.h"
+#include "pocketcalculator.h"
 #include <limits>
+#include <ostream>
+#include <sstream>
 
 void test_one_plus_one() {
 	auto result = calc(1, 1, '+');
@@ -18,8 +22,11 @@ void thest_three_divided_two() {
 	ASSERT_EQUAL(1, result);
 }
 void test_five_divided_zero() {
-	auto result = calc(5, 0, '/');
-	ASSERT_EQUAL(INT32_MAX, result);
+	ASSERT_THROWS(calc(5, 0, '/'),std::exception);
+}
+
+void test_modulo_zero() {
+	ASSERT_THROWS(calc(3, 0, '%'),std::exception);
 }
 
 void test_modulo(){
@@ -29,9 +36,47 @@ void test_modulo(){
 	ASSERT_EQUAL(1, result);
 }
 
+void testPrintLargeDigitZero() {
+	std::ostringstream output{};
+	printLargeDigit(0, output);
+	ASSERT_EQUAL(	" - \n"
+					"| |\n"
+					"   \n"
+					"| |\n"
+					" - \n", output.str());
+}
+
+void testFullOperation() {
+
+	std::ostringstream output{};
+	std::stringstream input{};
+	input << "2 + 3";
+
+	pocketcalculator(input, output);
+
+	ASSERT_EQUAL(	" - \n"
+					"|  \n"
+					" - \n"
+					"  |\n"
+					" - \n", output.str());
+}
+
+void testError() {
+	std::ostringstream output{};
+	std::stringstream input{};
+	input << "18/0";
+
+	pocketcalculator(input, output);
+	ASSERT_EQUAL(	" -             \n"
+			 "|              \n"
+			 " -  -  -  -  - \n"
+			 "|  |  |  | ||  \n"
+			 " -        -    \n", output.str());
+}
+
 void test_wrong_operator(){
-	auto result = calc(6, 3, '&');
-	ASSERT_EQUAL(INT32_MAX, result);
+
+	ASSERT_THROWS(calc(6, 3, '&'), std::exception);
 }
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
@@ -41,6 +86,8 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_five_divided_zero));
 	s.push_back(CUTE(test_wrong_operator));
 	s.push_back(CUTE(test_modulo));
+	s.push_back(CUTE(testPrintLargeDigitZero));
+	s.push_back(CUTE(testFullOperation));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };

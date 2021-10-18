@@ -18,6 +18,8 @@ const std::array<std::array<std::string, 5>, 10> numbers { { { " - ", "| |", "  
 		{ " - ", "| |", " - ", "  |", " - " }	// 9
 } };
 
+const std::array<std::string,5> minus {"   ","   "," - ","   ","   "};
+
 void printLargeDigit(int i, std::ostream &out) {
 	std::for_each(std::cbegin(numbers.at(i)), std::cend(numbers.at(i)), [&out](auto x) {
 		out << x << '\n';
@@ -32,10 +34,7 @@ void printLargeNumber(int i, std::ostream &out) {
 
 	for (int j = 0; j < 5; j++) {
 		if (i < 0) {
-			if (j == 2)
-				out << '-';
-			else
-				out << ' ';
+				out << minus[j];
 		}
 		for (char const &character : stringNumber) {
 			const int intNum = ((int) character) - 48;
@@ -47,6 +46,10 @@ void printLargeNumber(int i, std::ostream &out) {
 }
 
 void printLargeError(std::ostream &out) {
-	out << " -             \n" << "|              \n" << " -  -  -  -  - \n" << "|  |  |  | ||  \n" << " -        -    \n" << "Try again!";
+	out 	<< " -             \n"
+			<< "|              \n"
+			<< " -  -  -  -  - \n"
+			<< "|  |  |  | ||  \n"
+			<< " -        -    \n";
 }
 
