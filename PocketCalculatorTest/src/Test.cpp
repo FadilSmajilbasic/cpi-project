@@ -22,14 +22,14 @@ void thest_three_divided_two() {
 	ASSERT_EQUAL(1, result);
 }
 void test_five_divided_zero() {
-	ASSERT_THROWS(calc(5, 0, '/'),std::exception);
+	ASSERT_THROWS(calc(5, 0, '/'), std::exception);
 }
 
 void test_modulo_zero() {
-	ASSERT_THROWS(calc(3, 0, '%'),std::exception);
+	ASSERT_THROWS(calc(3, 0, '%'), std::exception);
 }
 
-void test_modulo(){
+void test_modulo() {
 	auto result = calc(6, 3, '%');
 	ASSERT_EQUAL(0, result);
 	result = calc(7, 3, '%');
@@ -37,44 +37,71 @@ void test_modulo(){
 }
 
 void testPrintLargeDigitZero() {
-	std::ostringstream output{};
+	std::ostringstream output { };
 	printLargeDigit(0, output);
-	ASSERT_EQUAL(	" - \n"
-					"| |\n"
-					"   \n"
-					"| |\n"
-					" - \n", output.str());
+	ASSERT_EQUAL(" - \n"
+			"| |\n"
+			"   \n"
+			"| |\n"
+			" - \n", output.str());
 }
 
 void testFullOperation() {
 
-	std::ostringstream output{};
-	std::stringstream input{};
+	std::ostringstream output { };
+	std::stringstream input { };
 	input << "2 + 3";
 
 	pocketcalculator(input, output);
 
-	ASSERT_EQUAL(	" - \n"
-					"|  \n"
-					" - \n"
-					"  |\n"
-					" - \n", output.str());
+	ASSERT_EQUAL(" - \n"
+			"|  \n"
+			" - \n"
+			"  |\n"
+			" - \n", output.str());
+}
+
+void testMultilineInput() {
+	std::stringstream input { };
+	input << "2\n+\n3\n";
+
+	ASSERT_EQUAL(5, calc(input));
+}
+
+void testConcatInput() {
+	std::stringstream input { };
+	input << "2*3";
+
+	ASSERT_EQUAL(6, calc(input));
+}
+
+void testConcatInputLong() {
+	std::stringstream input { };
+	input << "2222+3333";
+
+	ASSERT_EQUAL(5555, calc(input));
+}
+void testMultilineInputLong() {
+	std::stringstream input { };
+	input << "222\n+\n333\n";
+
+	ASSERT_EQUAL(555, calc(input));
 }
 
 void testError() {
-	std::ostringstream output{};
-	std::stringstream input{};
+	std::ostringstream output { };
+	std::stringstream input { };
 	input << "18/0";
 
 	pocketcalculator(input, output);
-	ASSERT_EQUAL(	" -             \n"
-			 "|              \n"
-			 " -  -  -  -  - \n"
-			 "|  |  |  | ||  \n"
-			 " -        -    \n", output.str());
+	ASSERT_EQUAL(" -             \n"
+			"|              \n"
+			" -  -  -  -  - \n"
+			"|  |  |  | ||  \n"
+			" -        -    \n", output.str());
 }
 
-void test_wrong_operator(){
+void test_wrong_operator() {
 
 	ASSERT_THROWS(calc(6, 3, '&'), std::exception);
 }
@@ -88,6 +115,12 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_modulo));
 	s.push_back(CUTE(testPrintLargeDigitZero));
 	s.push_back(CUTE(testFullOperation));
+	s.push_back(CUTE(testError));
+	s.push_back(CUTE(testMultilineInput));
+	s.push_back(CUTE(testConcatInput));
+	s.push_back(CUTE(test_modulo_zero));
+	s.push_back(CUTE(testConcatInputLong));
+	s.push_back(CUTE(testMultilineInputLong));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };

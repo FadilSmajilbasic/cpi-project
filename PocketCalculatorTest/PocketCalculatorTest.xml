@@ -1,5 +1,5 @@
 <testsuites>
-	<testsuite name="AllTests" tests="8">
+	<testsuite name="AllTests" tests="14">
 		<testcase classname="AllTests" name="test_one_plus_one"/>
 		<testcase classname="AllTests" name="test_two_times_two"/>
 		<testcase classname="AllTests" name="thest_three_divided_two"/>
@@ -8,5 +8,11 @@
 		<testcase classname="AllTests" name="test_modulo"/>
 		<testcase classname="AllTests" name="testPrintLargeDigitZero"/>
 		<testcase classname="AllTests" name="testFullOperation"/>
+		<testcase classname="AllTests" name="testError"/>
+		<testcase classname="AllTests" name="testMultilineInput"/>
+		<testcase classname="AllTests" name="testConcatInput"/>
+		<testcase classname="AllTests" name="test_modulo_zero"/>
+		<testcase classname="AllTests" name="testConcatInputLong"/>
+		<testcase classname="AllTests" name="testMultilineInputLong"/>
 	</testsuite>
 </testsuites>
